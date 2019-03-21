@@ -67,8 +67,6 @@ static void LCD_write_string(const uint8_t * data, uint8_t row, uint8_t column, 
 	volatile uint8_t i = 0;
 	volatile uint8_t index = 0;
 
-	// make a middle if needed
-
 	while( data[ len_of_data ] != '\0' ) { len_of_data++; };
 
 	if ( column >= 0 && column <= 15 && (row == 1 || row == 0) && len_of_data <= 32 && len_of_data != 0 )
@@ -94,7 +92,7 @@ static void LCD_write_string(const uint8_t * data, uint8_t row, uint8_t column, 
 						}
 						else
 						{
-		                    _LCD_write( data[index++] , DATA , BOTH );
+		                    _LCD_write( data[ index++ ] , DATA , BOTH );
 						}
 					}
 
@@ -112,16 +110,14 @@ static void LCD_write_string(const uint8_t * data, uint8_t row, uint8_t column, 
 						}
 						else
 						{
-		                    _LCD_write( data[index++] , DATA , BOTH );
+		                    _LCD_write( data[ index++ ] , DATA , BOTH );
 						}
 					}
 
+					break;
 			}
-
 		}
-
-	};
-
+	}
 }
 
 
@@ -137,8 +133,7 @@ static void LCD_write_char(uint8_t data, uint8_t row, uint8_t column)
 
 			if ( column >= 0 && column <= 15 )
 			{
-                // 0x40 is a offset adress
-                // protocol is DB6 to DB0 is Adress, so therefor offset with 0x80
+                // DB6 to DB0 is Adress, so therefor offset with 0x80
 				_LCD_write( column + 0x80, CMD , BOTH );
 				_LCD_write( data , DATA , BOTH );
 			}
@@ -149,8 +144,7 @@ static void LCD_write_char(uint8_t data, uint8_t row, uint8_t column)
 
 			if ( column >= 0 && column <= 15 )
 			{
-				// 0x40 is a offset adress
-			    // protocol is DB6 to DB0 is Adress, so therefor offset with 0x80
+			    // DB6 to DB0 is Adress, so therefor offset with 0x80
 				_LCD_write( column + 0x80 + 0x40, CMD , BOTH );
 				_LCD_write( data , DATA , BOTH );
 			}
@@ -159,7 +153,7 @@ static void LCD_write_char(uint8_t data, uint8_t row, uint8_t column)
 
 		default:
 
-		    //_LCD_write( 'F' , DATA , BOTH );
+			LCD_write_string( (uint8_t *) "FAIL", 0, 6, 0, 0);
 
 		    break;
 
@@ -223,17 +217,18 @@ static void _LCD_write(uint8_t cmd, LCD_TYPE type, NIBBLE nibble)
 
 static void LCD_clear()
 /****************************************************************************
-*   Function : init function for LCD setups everything
+*   Function : cleans up the display
 ****************************************************************************/
 {
 
+	_LCD_write(0x01, CMD, BOTH);
 
 };
 
 
 static void LCD_init()
 /****************************************************************************
-*   Function : init function for LCD setups everything
+*   Function : init function for LCD
 ****************************************************************************/
 {
 
