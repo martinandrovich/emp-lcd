@@ -220,9 +220,7 @@ static void LCD_clear()
 *   Function : cleans up the display
 ****************************************************************************/
 {
-
 	_LCD_write(0x01, CMD, BOTH);
-
 };
 
 
@@ -286,9 +284,7 @@ static void _LCD_delay(uint32_t delay)
 {
 
     volatile uint32_t delay_t = delay;
-	while (delay_t != 0) {
-	    delay_t--;
-	};
+	while (delay_t != 0) { delay_t--;};
 
 }
 
