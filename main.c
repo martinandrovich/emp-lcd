@@ -60,7 +60,7 @@ int main(void)
 	btn.set_callback(btn_sw1, DOUBLE_PRESS, LAMBDA(void _(void)
 		{
 			//ledctrl.set_mode(ctrl1, EMERGENCY);
-	        lcd.write_char('H', 0, 0);
+	        lcd.write_char('H', 2, 0);
 		}
 	 ));
 
