@@ -61,7 +61,7 @@ static void LCD_write_string_s(const uint8_t * data)
 ****************************************************************************/
 {
     LCD_clear();
-	LCD_write_string(data, 1, 0, 1, 0);
+    LCD_write_string(data, 0, 5, 0, 0);
 };
 
 /*****************************   Functions   *******************************/
@@ -232,6 +232,7 @@ static void LCD_clear()
 ****************************************************************************/
 {
 	_LCD_write(0x01, CMD, BOTH);
+	for(int i = 0; i < 10000; i++);
 };
 
 
@@ -284,7 +285,7 @@ static void LCD_init()
 	_LCD_write(0x06, CMD, BOTH);
 
 	// Home
-	_LCD_write(0x01, CMD, BOTH);
+	LCD_clear();
 
 }
 

@@ -47,13 +47,12 @@ int main(void)
 	// init BUTTON instance (SW1)
 	BUTTON* btn_sw1 = btn.new(SW1);
 
-	lcd.init();
-
 	// set single press callback
 	btn.set_callback(btn_sw1, SINGLE_PRESS, LAMBDA(void _(void)
 		{
 			// ledctrl.set_mode(ctrl1, NORWEGIAN);
 	        // lcd.init();
+		clk.adjust();
 
 		}
 	));
@@ -63,6 +62,7 @@ int main(void)
 		{
 			// ledctrl.set_mode(ctrl1, EMERGENCY);
 	        // lcd.write_char('H', 2, 0);
+		clk.toggle_dir();
 		}
 	 ));
 
@@ -73,8 +73,11 @@ int main(void)
 		{
 			// ledctrl.set_mode(ctrl1, NORMAL);
 	        // lcd.write_string(buf, 0, 12, 1, 1);
+		clk.toggle_mode();
 		}
 	));
+
+	lcd.init();
 
 	clk.init(lcd.write_string_s);
 	clk.toggle_mode();
@@ -82,8 +85,13 @@ int main(void)
 	// super-loop
 	for(;;)
 	{
-	    // btn.controller(btn_sw1);
+		btn.controller(btn_sw1);
 		clk.operate();
+
+		//lcd.write_string_s("fail xD :");
+		//for(int i = 0; i < 100000; i++);
+
+
 	}
 
 	return 0;
